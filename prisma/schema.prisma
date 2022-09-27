@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Ticket {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   String?
+  assignedTo  String?
+  status      Status   @default(Open)
+  priority    Priority @default(Low)
+  product     String?
+  description String   @db.VarChar(255)
+}
+
+enum Status {
+  Open
+  Inprogress
+  Closed
+}
+
+enum Priority {
+  High
+  Low
+  VeryHigh
+
+}
